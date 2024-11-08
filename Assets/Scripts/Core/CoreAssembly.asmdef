@@ -1,9 +1,7 @@
 {
-    "name": "PresentationAssembly",
-    "rootNamespace": "Asteroids.Presentation",
+    "name": "CoreAssembly",
+    "rootNamespace": "Asteroids.Core",
     "references": [
-        "GUID:b52e8de677455db4b9bcc003017c6629",
-        "GUID:2d4678e66d7657a4abf9d686872798fb",
         "GUID:d8b63aba1907145bea998dd612889d6b"
     ],
     "includePlatforms": [],
@@ -14,5 +12,5 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": true
 }

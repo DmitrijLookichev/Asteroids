@@ -1,7 +1,9 @@
 {
-    "name": "GameAssembly",
-    "rootNamespace": "Asteroids.GameLogic",
+    "name": "CommonAssembly",
+    "rootNamespace": "",
     "references": [
+        "GUID:b52e8de677455db4b9bcc003017c6629",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:d8b63aba1907145bea998dd612889d6b"
     ],
     "includePlatforms": [],
@@ -12,5 +14,5 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": true
+    "noEngineReferences": false
 }
