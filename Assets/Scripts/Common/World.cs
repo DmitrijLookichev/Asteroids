@@ -1,14 +1,13 @@
 using Asteroids.Common.InSystems;
+using Asteroids.Common.Objects;
 using Asteroids.Common.OutSystems;
+using Asteroids.Common.Presets;
 using Asteroids.Core;
-using Asteroids.Core.Aspects;
 using Asteroids.Core.Systems;
 
 using System;
 using Unity.Profiling;
 using UnityEngine;
-
-using ISystem = Asteroids.Core.ISystem;
 
 namespace Asteroids.Common
 {
@@ -22,21 +21,24 @@ namespace Asteroids.Common
         private readonly ISystem[] _logicSystem;
         private readonly ISystem[] _outSystem;
 
-		public World(ShipAspect player, ShipAspect alien) 
+		public World((ShipBehaviour Prefab, ShipPreset Preset) player,
+			(ShipBehaviour Prefab, ShipPreset Preset) alien) 
         {
+			var container = new Container(player, alien);
+
 			_inSystem = new ISystem[]
 		    {
-                new InPlayerSystem(player),
+                new InPlayerSystem(container),
 		    };
             _logicSystem = new ISystem[]
 		    {
-				new PlayerVelocitySystem(player),
-				new PlayerTransformSystem(player),
+				new PlayerVelocitySystem(container),
+				new PlayerTransformSystem(container),
 		    };
 
 			_outSystem = new ISystem[]
 		    {
-				new OutPlayerSystem(player),
+				new OutPlayerSystem(container),
 
 			};
 		}

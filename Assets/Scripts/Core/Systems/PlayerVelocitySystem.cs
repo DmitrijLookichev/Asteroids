@@ -1,29 +1,36 @@
-using Asteroids.Core.Aspects;
 using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
-    public class PlayerVelocitySystem : ISystem
-    {
-		private readonly ShipAspect _player;
+    public class PlayerVelocitySystem : BaseSystem<ICoreContainer>
+	{
+		public PlayerVelocitySystem(ICoreContainer container) : base(container)	{}
 
-		public PlayerVelocitySystem(ShipAspect player)
+		public override void OnUpdate(in float time, in float delta)
 		{
-			_player = player;
-		}
-		public void OnUpdate(in float time, in float delta)
-		{
-			ref var input = ref _player.Input;
-			ref var velocity = ref _player.Velocity;
-			var forward = math.mul(_player.Transform.rot.value, new float3(0, 0, 1));
+			ref var player = ref Container.PlayerAspect;
 
-			velocity = input.Get(Datas.ShipInput.Values.Acceleration)
-				//add acceleration
-				? velocity + forward * _player.Mobility.Acceleration
-				//use deceleration
-				: velocity - forward * _player.Mobility.Deceleration;
+			ref var mobility = ref player.Mobility;
+			ref var input = ref player.Input;
+			ref var velocity = ref player.Velocity;
 
-			velocity = mathU.ClampMagnitude(velocity, _player.Mobility.MaxVelocity);
+			var up = math.mul(player.Transform.rot.value, math.up());
+
+			//add acceleration
+			if (input.Get(Datas.ShipInput.Values.Acceleration))
+			{
+				velocity += up * mobility.Acceleration;
+			}
+			//without movement
+			else if (mathU.Approximately(math.lengthsq(velocity), 0f))
+				return;
+			//use deceleration
+			else
+			{
+				velocity = math.lerp(velocity, float3.zero, delta * mobility.Deceleration);
+			}
+
+			velocity = mathU.ClampMagnitude(velocity, mobility.MaxVelocity);
 		}
-    }
+	}
 }

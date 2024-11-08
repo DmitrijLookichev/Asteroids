@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Asteroids.Presentation.Presets
+namespace Asteroids.Common.Presets
 {
 	[CreateAssetMenu(fileName = "NewShipPreset", menuName = "Presets/Ship", order = 0)]
 	public class ShipPreset : ScriptableObject

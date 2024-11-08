@@ -1,26 +1,18 @@
 using Asteroids.Core;
-using Asteroids.Core.Aspects;
-using UnityEngine;
 
 namespace Asteroids.Common.OutSystems
 {
-	internal class OutPlayerSystem : ISystem
+	internal class OutPlayerSystem : BaseSystem<ICommonContainer>
 	{
-		private readonly ShipAspect _player;
-		//todo add in construct
-		private readonly Transform _presentation;
-		//todo add UI update???
+		public OutPlayerSystem(ICommonContainer container) : base(container) {}
 
-		public OutPlayerSystem(ShipAspect player)
-		{
-			_player = player;
-		}
-
-		public void OnUpdate(in float time, in float delta)
+		public override void OnUpdate(in float time, in float delta)
 		{
 			//update transformation
-			ref var transform = ref _player.Transform;
-			_presentation.SetPositionAndRotation(transform.pos, transform.rot);
+			ref var transform = ref Container.PlayerAspect.Transform;
+
+			Container.PlayerBehaviour.transform
+				.SetPositionAndRotation(transform.pos, transform.rot);
 		}
 	}
 }

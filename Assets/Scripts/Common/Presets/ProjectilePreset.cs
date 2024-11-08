@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace Asteroids.Presentation.Presets
+namespace Asteroids.Common.Presets
 {
 	public class ProjectilePreset// : BasePreset<>
 	{

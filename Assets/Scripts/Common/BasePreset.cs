@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Asteroids.Presentation
+namespace Asteroids.Common
 {
     public abstract class BasePreset<T> : ScriptableObject
     {

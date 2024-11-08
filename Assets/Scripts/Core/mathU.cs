@@ -20,5 +20,11 @@ namespace Asteroids.Core
 
 			return vector;
 		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool Approximately(float a, float b)
+		{	
+			return math.abs(b - a) < math.max(1E-06f * math.max(math.abs(a), math.abs(b)), math.EPSILON * 8f);
+		}
 	}
 }
