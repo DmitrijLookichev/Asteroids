@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e86e18e72000645b0e16ab72c47700, type: 3}
+  m_Name: PlayerShipPreset
+  m_EditorClassIdentifier: 
+  <Lifes>k__BackingField: 1
+  <RotationSpeed>k__BackingField: 40
+  <Acceleration>k__BackingField: 20
+  <Deceleration>k__BackingField: 5
+  <MaxVelocity>k__BackingField: 1
+  <FireReload>k__BackingField: 1
+  <LaserReload>k__BackingField: 1
