@@ -7,32 +7,41 @@ namespace Asteroids.Core.Aspects
 	public class ShipAspect : IAspect
 	{
 		private RigidTransform _transform;
-		private float3 _velocity;
+		private ShipMobility _mobility;
+		private ShipWeapon _weapon;
 		private ShipInput _input;
 
-		//todo properties?
-		public ShipMobility Mobility;
-		public byte Lifes;
-		
-		public float LaserReload;
+		private float3 _velocity;
+		private float _fireReload;
 
 		public uint Identity { get; set; }
 
+		//Components
 		public ref RigidTransform Transform { get => ref _transform; }
-		public ref float3 Velocity { get => ref _velocity; }
+		public ref ShipMobility Mobility { get => ref _mobility; }
+		public ref ShipWeapon Weapon { get => ref _weapon; }
 		public ref ShipInput Input { get => ref _input; }
 
-		public ShipAspect(ShipMobility mobility, byte lifes,
-			float laserReload, ShipInput input)
+		//Datas
+		public ref float3 Velocity { get => ref _velocity; }
+		public ref float FireReload { get => ref _fireReload; }
+
+		public ShipAspect(ShipMobility mobility, ShipWeapon weapon)
 		{
-			(Transform, Mobility, Lifes, LaserReload, Input)
-				= (RigidTransform.identity, mobility, lifes, laserReload, input);
+			(Transform, Mobility, Weapon, Input)
+				= (RigidTransform.identity, mobility, weapon, new ShipInput());
 		}
 
+		[System.Obsolete]//todo
 		public void Teleport(float3 pos, quaternion rot)
 		{
 			(_transform.pos, _transform.rot) = (pos, rot);
 			DebugUtility.AddLog("Player Teleport");
+		}
+
+		public IAspect Clone()
+		{
+			return new ShipAspect(_mobility, _weapon);
 		}
 	}
 }

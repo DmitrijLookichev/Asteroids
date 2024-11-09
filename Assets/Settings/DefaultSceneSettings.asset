@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4427781728c39b54f9b92b2c74525f07, type: 3}
+  m_Name: DefaultSceneSettings
+  m_EditorClassIdentifier: 
+  <Player>k__BackingField:
+    Prefab: {fileID: 2619708796238005831, guid: ec3cc42efc47a6d4db2e77b67257d946, type: 3}
+    Preset: {fileID: 11400000, guid: 6d0abf6c518c26842a61b433b317cdcc, type: 2}
+  <Alien>k__BackingField:
+    Prefab: {fileID: 7188063274777716902, guid: 59ddc9aa9263ff44aba5a9d857757bfd, type: 3}
+    Preset: {fileID: 11400000, guid: 4af2af99150369343b81f2a1cde0b909, type: 2}
+  <Projectile>k__BackingField:
+    Prefab: {fileID: 7406018337478212002, guid: 3f5d7e776e533aa459daac99ace7172d, type: 3}
+    Preset: {fileID: 11400000, guid: 9cb59f81278dbf84f91df2763397e345, type: 2}
+  <BigAsteroid>k__BackingField:
+    Prefab: {fileID: 8389288997186194035, guid: 2bc0237bad94a1f4b93e6d1cbc5fc28f, type: 3}
+    Preset: {fileID: 11400000, guid: 7c23798706c3bbb42b7d00f68c662c1f, type: 2}
+  <SmallAsteroid>k__BackingField:
+    Prefab: {fileID: 6732164541303080479, guid: 31917f44f36129a48a941061085479d4, type: 3}
+    Preset: {fileID: 11400000, guid: 92de4f793cc50544093179fc3975311f, type: 2}

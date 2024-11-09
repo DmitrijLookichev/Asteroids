@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Asteroids.Common.Objects
+namespace Asteroids.Common.Actors
 {
-    public class ShipBehaviour : IdentityBehaviour
+    public class ShipActor : ColliderActor
 	{
         [field: SerializeField]
         public Vector3 FireOffset { get; private set; }

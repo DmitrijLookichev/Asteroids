@@ -1,81 +1,63 @@
 using Asteroids.Common.InSystems;
-using Asteroids.Common.Objects;
+using Asteroids.Common.Actors;
 using Asteroids.Common.OutSystems;
 using Asteroids.Common.Presets;
+using Asteroids.Common.Stores;
 using Asteroids.Core;
 using Asteroids.Core.Systems;
 
 using System;
 using Unity.Profiling;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 
 namespace Asteroids.Common
 {
 	public class World : IDisposable
     {
-		private readonly ProfilerMarker _inMarker = new ("GameLogic.OnInUpdate");
-		private readonly ProfilerMarker _logicMarker = new ("GameLogic.OnLogicUpdate");
-		private readonly ProfilerMarker _outMarker = new ("GameLogic.OnOutUpdate");
+		private readonly ProfilerMarker _marker = new ("Systems.OnUpdate");
 
-		private readonly ISystem[] _inSystem;
-        private readonly ISystem[] _logicSystem;
-        private readonly ISystem[] _outSystem;
+        private readonly ISystem[] _systems;
 
-		public World((ShipBehaviour Prefab, ShipPreset Preset) player,
-			(ShipBehaviour Prefab, ShipPreset Preset) alien) 
+		public World(SceneSettings settings) 
         {
-			var container = new Container(player, alien);
+			var container = new Container(settings);
 
-			_inSystem = new ISystem[]
+            _systems = new ISystem[]
 		    {
-                new InPlayerSystem(container),
-		    };
-            _logicSystem = new ISystem[]
-		    {
+				//Inhale data systems (Inputs)
+				new InPlayerSystem(container),
+				//---------------------------------------
+				//GameLogic (without UnityEngine) systems
 				new PlayerVelocitySystem(container),
 				new PlayerTransformSystem(container),
-		    };
-
-			_outSystem = new ISystem[]
-		    {
+				new PlayerFireSystem(container),
+				new ColliderLifetimeSystem(container),
+				new ColliderMoveSystem(container),
+				new ColliderCollisionSystem(container),
+				//---------------------------------------
+				//Exhale data systems (Outputs)
 				new OutPlayerSystem(container),
-
 			};
 		}
 
         public void OnUpdate(float time, float delta)
         {
 			if (Mathf.Approximately(delta, .0f)) return;
-			void callUpdate(ISystem[] systems)
+			using (_marker.Auto())
 			{
-				for(int i = 0, iMax = systems.Length; i < iMax; i++)
-					systems[i].OnUpdate(time, delta);
+				for (int i = 0, iMax = _systems.Length; i < iMax; i++)
+					_systems[i].OnUpdate(time, delta);
 			}
-
-			using (_inMarker.Auto())
-				callUpdate(_inSystem);
-
-			using (_logicMarker.Auto())
-				callUpdate(_logicSystem);
-
-			using (_outMarker.Auto())
-				callUpdate(_outSystem);
 
 			PrintLogs();
 		}
 
 		public void Dispose()
 		{
-            void disposeSystems(ISystem[] systems)
-            {
-                for(int i = 0, iMax = systems.Length; i < iMax; i++)
-                    if (systems[i] is IDisposable disposable)
-                        disposable.Dispose();
-            }
-
-            disposeSystems(_inSystem);
-            disposeSystems(_logicSystem);
-            disposeSystems(_outSystem);
+			for (int i = 0, iMax = _systems.Length; i < iMax; i++)
+				if (_systems[i] is IDisposable disposable)
+					disposable.Dispose();
 		}
 
 		[System.Diagnostics.Conditional("UNITY_EDITOR")]
