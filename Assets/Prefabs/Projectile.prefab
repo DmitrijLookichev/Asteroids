@@ -10,19 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 23476266314655126, guid: 13a63450f59b18845be07c1419c75107, type: 3}
       propertyPath: m_Name
-      value: _baseObject Variant
+      value: Projectile
       objectReference: {fileID: 0}
     - target: {fileID: 5429837294031989387, guid: 13a63450f59b18845be07c1419c75107, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5429837294031989387, guid: 13a63450f59b18845be07c1419c75107, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5429837294031989387, guid: 13a63450f59b18845be07c1419c75107, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5429837294031989387, guid: 13a63450f59b18845be07c1419c75107, type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5429837294031989387, guid: 13a63450f59b18845be07c1419c75107, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7701089633375327039, guid: 13a63450f59b18845be07c1419c75107, type: 3}
       propertyPath: m_Sprite
@@ -102,4 +102,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
-  <Radius>k__BackingField: 0.4
+  <Radius>k__BackingField: 0.1

@@ -6,6 +6,7 @@ namespace Asteroids.Core.Aspects
 	//todo struct in Container??
 	public class ShipAspect : IAspect
 	{
+		private CollisionData _collider;
 		private RigidTransform _transform;
 		private ShipMobility _mobility;
 		private ShipWeapon _weapon;
@@ -17,6 +18,7 @@ namespace Asteroids.Core.Aspects
 		public uint Identity { get; set; }
 
 		//Components
+		public ref CollisionData Collider => ref _collider;
 		public ref RigidTransform Transform { get => ref _transform; }
 		public ref ShipMobility Mobility { get => ref _mobility; }
 		public ref ShipWeapon Weapon { get => ref _weapon; }
@@ -26,8 +28,9 @@ namespace Asteroids.Core.Aspects
 		public ref float3 Velocity { get => ref _velocity; }
 		public ref float FireReload { get => ref _fireReload; }
 
-		public ShipAspect(ShipMobility mobility, ShipWeapon weapon)
+		public ShipAspect(CollisionData collider, ShipMobility mobility, ShipWeapon weapon)
 		{
+			_collider = collider;
 			(Transform, Mobility, Weapon, Input)
 				= (RigidTransform.identity, mobility, weapon, new ShipInput());
 		}
@@ -41,7 +44,7 @@ namespace Asteroids.Core.Aspects
 
 		public IAspect Clone()
 		{
-			return new ShipAspect(_mobility, _weapon);
+			return new ShipAspect(_collider, _mobility, _weapon);
 		}
 	}
 }

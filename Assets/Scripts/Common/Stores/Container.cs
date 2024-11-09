@@ -35,6 +35,7 @@ namespace Asteroids.Common.Stores
 			PlayerBehaviour = instance;
 
 			var colliderAspect = new ColliderAspect(
+				new CollisionData(settings.Projectile.Prefab.Radius, settings.Projectile.Prefab.Type),
 				settings.Projectile.Preset.MoveSpeed, 
 				settings.Projectile.Preset.Lifetime);
 			_projectilePool = new ObjectPool<ColliderActor, ColliderAspect>(
@@ -51,7 +52,7 @@ namespace Asteroids.Common.Stores
 			var mobility = new ShipMobility(math.radians(preset.RotationSpeed),
 				preset.Acceleration, preset.Deceleration, preset.MaxVelocity);
 			var weapon = new ShipWeapon(behaviour.FireOffset, preset.FireReload, preset.LaserReload);
-			var aspect = new ShipAspect(mobility, weapon);
+			var aspect = new ShipAspect(new CollisionData(behaviour.Radius, behaviour.Type), mobility, weapon);
 
 			behaviour = Object.Instantiate(behaviour);
 			//todo ??? aspect.Identity = behaviour.Identity = ++_identity;

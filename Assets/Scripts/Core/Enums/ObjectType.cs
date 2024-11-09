@@ -1,11 +1,11 @@
 namespace Asteroids.Core
 {
-	public enum ObjectType : ushort
+	public enum ObjectType : byte
 	{
-		None,
 		Player,
 		Alien,
 		Asteroid,
-		Projectile
+		ProjectilePlayer,
+		ProjectileAlien
 	}
 }

@@ -8,5 +8,6 @@ namespace Asteroids.Core
 	{
 		TAspect Temp_GetAspect();
 		void Temp_ReturnAspect(TAspect aspect);
+		void Temp_ClearReturnedAspects();
 	}
 }

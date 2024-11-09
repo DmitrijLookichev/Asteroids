@@ -38,6 +38,7 @@ namespace Asteroids.Common
 				//---------------------------------------
 				//Exhale data systems (Outputs)
 				new OutPlayerSystem(container),
+				new RendererSystem(container),
 			};
 		}
 
