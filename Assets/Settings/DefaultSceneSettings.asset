@@ -31,11 +31,11 @@ MonoBehaviour:
     Prefab: {fileID: 6732164541303080479, guid: 31917f44f36129a48a941061085479d4, type: 3}
     Preset: {fileID: 11400000, guid: 92de4f793cc50544093179fc3975311f, type: 2}
   <AsteroidSpawnInterval>k__BackingField:
-    Min: 3
-    Max: 10
-  <AlienSpawnInterval>k__BackingField:
-    Min: 7
+    Min: 6
     Max: 15
+  <AlienSpawnInterval>k__BackingField:
+    Min: 13
+    Max: 20
   <SpawnSmallAsteroids>k__BackingField:
     Min: 2
     Max: 4

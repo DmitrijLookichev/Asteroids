@@ -42,7 +42,7 @@ namespace Asteroids.Common.Stores
 					{
 						++_index;
 						if (_index >= _data.Length) return false;
-					} while ((_mask & (1 << _index)) != 1);
+					} while ((_mask & (1 << _index)) == 0);
 
 					_numerator = _data[_index].Keys.GetEnumerator();
 				}

@@ -1,7 +1,5 @@
 ﻿using Asteroids.Core.Datas;
-
 using System;
-
 using Unity.Mathematics;
 
 namespace Asteroids.Core.Aspects
@@ -32,5 +30,7 @@ namespace Asteroids.Core.Aspects
 			=>	obj is Aspect aspect && Equals(aspect);
 		public bool Equals(Aspect other)
 			=> InstanceID == other.InstanceID;
+		public override string ToString()
+			=> $"{GetType().Name}.{Type} = {InstanceID}";
 	}
 }

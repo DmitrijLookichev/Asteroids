@@ -4,8 +4,6 @@ namespace Asteroids.Core.Aspects
 {
 	public class ColliderAspect : Aspect
 	{
-		public uint Identity { get; set; }
-
 		public float Speed { get; }
 		public float Lifetime { get; }
 		public float TimeToDie { get; set; }

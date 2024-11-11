@@ -80,10 +80,9 @@ namespace Asteroids.Common.Stores
 				break;
 			}
 			if(aspect == null)
-			{
 				Spawn(_prefabs[type], out actor, out aspect);
-				_buffer.Add(aspect, actor);
-			}
+
+			_buffer.Add(aspect, actor);
 			return aspect;
 		}
 		public T GetAspect<T>(ObjectType type)
@@ -92,7 +91,11 @@ namespace Asteroids.Common.Stores
 
 		public void ReturnAspect(Aspect aspect)
 		{
-			_buffer.Add(aspect, _enables[(int)aspect.Type][aspect]);
+			var actor = _enables[(int)aspect.Type][aspect];
+			actor.gameObject.SetActive(false);
+
+			_buffer.Add(aspect, actor);
+			DebugUtility.AddLog($"<b>[Return Aspect]</b>: {aspect}");
 		}
 
 		public void ConfirmChanged()
@@ -107,7 +110,7 @@ namespace Asteroids.Common.Stores
 					_enables[type].Add(pair.Key, pair.Value);
 				}
 				//2. Returned (move: _enables -> _disables)
-				if (_enables[type].Remove(pair.Key))
+				else if (_enables[type].Remove(pair.Key))
 				{
 					_disables[type].Add(pair.Key, pair.Value);
 				}
@@ -117,7 +120,6 @@ namespace Asteroids.Common.Stores
 					_enables[type].Add(pair.Key, pair.Value);
 				}
 				//todo 4. can Create and Return in one frame? (error...)
-				pair.Value.gameObject.SetActive(false);
 			}
 
 			_buffer.Clear();

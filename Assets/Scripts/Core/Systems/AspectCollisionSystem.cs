@@ -6,6 +6,7 @@ namespace Asteroids.Core.Systems
 	public class AspectCollisionSystem : BaseSystem<ICoreContainer>
 	{
 		private Random _random;
+		private float _time;
 
 		public AspectCollisionSystem(ICoreContainer container) : base(container) 
 		{
@@ -14,6 +15,7 @@ namespace Asteroids.Core.Systems
 
 		public override void OnUpdate(in float time, in float delta)
 		{
+			_time = time;
 			foreach (var playerProjectile in Container.Aspects.PlayerProjectiles())
 			{
 				foreach(var asteroid in Container.Aspects.Asteroids())
@@ -43,7 +45,7 @@ namespace Asteroids.Core.Systems
 			//Check collision
 			if (math.lengthsq(direction) <= sumR * sumR)
 			{
-				DebugUtility.AddLog($"Hit: {type} and {other.Collider.Type}!");
+				DebugUtility.AddLog($"<b>[Collision]</b>: {type} & {other.Collider.Type}!");
 				ConfirmDestroyResult(type, self);
 				ConfirmDestroyResult(other.Collider.Type, other);
 			}
@@ -80,9 +82,10 @@ namespace Asteroids.Core.Systems
 			var count = _random.NextInt(interval.Min, interval.Max + 1);
 			for(int i = 0; i < count; ++i)
 			{
-				var asteroid = Container.Aspects.GetAspect(ObjectType.SmallAsteroid);
+				var asteroid = Container.Aspects.GetAspect<ColliderAspect>(ObjectType.SmallAsteroid);
 				asteroid.Transform.pos = pos;
 				asteroid.Transform.rot = quaternion.Euler(0f, 0f, _random.NextFloat(0f, 359f));
+				asteroid.TimeToDie = _time + asteroid.Lifetime;
 			}
 		}
 	}

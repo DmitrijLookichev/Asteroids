@@ -59,7 +59,7 @@ namespace Asteroids.Common.Stores
 		private ShipAspect CreateAspect(ShipSettings settings)
 		{
 			var (actor, preset) = (settings.Prefab, settings.Preset);
-			var mobility = new ShipMobility(math.radians(preset.RotationSpeed),
+			var mobility = new ShipMobility(preset.RotationSpeed,
 				preset.Acceleration, preset.Deceleration, preset.MaxVelocity);
 			var weapon = new ShipWeapon(actor.FireOffset, preset.FireReload, preset.LaserReload);
 
