@@ -2879,6 +2879,10 @@ MonoBehaviour:
   <LaserFill>k__BackingField: {fileID: 1486886642}
   <LaserReload>k__BackingField: {fileID: 871278149}
   <Score>k__BackingField: {fileID: 880137504}
+  <Pause>k__BackingField:
+    <Panel>k__BackingField: {fileID: 1433587176}
+    <Restart>k__BackingField: {fileID: 1102571422}
+    <Quit>k__BackingField: {fileID: 744010265}
 --- !u!1 &1824147951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3243,7 +3247,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000009536743, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -0.0000019073486, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2087993785

@@ -21,14 +21,11 @@ namespace Asteroids.Common
 #endif
 
 			_world = new World(_settings, _presentation);
-
-			//UnityEditorInternal.InternalEditorUtility
-			
 		}
 
 		private void Update()
 		{
-			_world.OnUpdate(Time.time, Time.deltaTime);
+			_world.OnManualUpdate();
 		}
 
 		private void OnDestroy()

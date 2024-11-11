@@ -13,13 +13,14 @@ namespace Asteroids.Common
 	public class World : IDisposable
     {
 		private readonly ProfilerMarker _marker = new ("Systems.OnUpdate");
-
         private readonly ISystem[] _systems;
+		//time offset in current level
+		private float _levelTime;
 
 		public World(SceneSettings settings, PresentationController presentation) 
         {
 			var container = new Container(settings, presentation);
-
+			_levelTime = Time.time;
 			_systems = new ISystem[]
 			{
 				//Inhale data systems (Inputs)
@@ -48,9 +49,12 @@ namespace Asteroids.Common
 			};
 		}
 
-        public void OnUpdate(float time, float delta)
+        public void OnManualUpdate()
         {
+			var delta = Time.deltaTime;
 			if (Mathf.Approximately(delta, .0f)) return;
+
+			var time = Time.time - _levelTime;
 			using (_marker.Auto())
 			{
 				for (int i = 0, iMax = _systems.Length; i < iMax; i++)
