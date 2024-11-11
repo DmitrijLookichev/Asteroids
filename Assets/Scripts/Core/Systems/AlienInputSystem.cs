@@ -13,9 +13,11 @@ namespace Asteroids.Core.Systems
 			var target = Container.Player.Transform.pos;
 			foreach(ShipAspect aspect in Container.Aspects.Aliens())
 			{
-				ref var transform = ref aspect.Transform;
-				transform.rot = quaternion.LookRotation(
-					math.normalize(transform.pos - target), -math.forward());
+				var up = math.mul(aspect.Transform.rot, math.down());
+				var direction = target - aspect.Transform.pos;
+
+				var angle = mathU.SignedAngle(up, direction, math.forward()) / 180f;
+				aspect.Input.Rotate = angle;
 			}
 		}
 	}

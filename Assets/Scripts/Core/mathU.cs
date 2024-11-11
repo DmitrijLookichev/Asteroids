@@ -22,6 +22,26 @@ namespace Asteroids.Core
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float Angle(this float3 from, float3 to)
+		{
+			var num = (float)math.sqrt((double)math.lengthsq(from) * math.lengthsq(to));
+			return (double)num < 1.0000000036274937E-15
+				? 0.0f
+				: (float)math.acos((double)math.clamp(math.dot(from, to) / num, -1f, 1f)) * 57.29578f;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float SignedAngle(float3 from, float3 to, float3 axis)
+		{
+			float num = Angle(from, to);
+			float num2 = from.y * to.z - from.z * to.y;
+			float num3 = from.z * to.x - from.x * to.z;
+			float num4 = from.x * to.y - from.y * to.x;
+			float num5 = math.sign(axis.x * num2 + axis.y * num3 + axis.z * num4);
+			return num * num5;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool Approximately(float a, float b)
 		{	
 			return math.abs(b - a) < math.max(1E-06f * math.max(math.abs(a), math.abs(b)), math.EPSILON * 8f);
