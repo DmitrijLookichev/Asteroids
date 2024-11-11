@@ -1,95 +1,151 @@
 ﻿using Asteroids.Common.Actors;
 using Asteroids.Core;
 using Asteroids.Core.Aspects;
-
-using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
 
 namespace Asteroids.Common.Stores
 {
-	//todo можно сделать кастомный енумератор, который будет учитывать "удаленные" объекты
-	//и который будет в конце цикла удалять их
-	internal class ObjectPool<TActor, TAspect> 
-		: ICommonPool<TActor>, ICorePool<TAspect>
-		where TActor : ColliderActor where TAspect : IAspect
+	internal partial class ObjectPool : IActorPool, IAspectPool
 	{
-		private static uint _identity = 0u;
+		#region Internal structs
+		private readonly struct PrefabData
+		{
+			public readonly Actor Actor;
+			public readonly Aspect Aspect;
+			public readonly Transform Root;
 
-		//private readonly List<TAspect> _aspects;
-		private readonly TAspect _prefabAspect;
-		private readonly TActor _prefabActor;
+			public PrefabData(Actor actor, Aspect aspect, Transform root)
+			{
+				(Actor, Aspect) = (actor, aspect);
+				Root = root;
+			}
+		}
+		#endregion
 
-		private readonly Dictionary<uint, TAspect> _tempAspects;
-		private readonly Dictionary<uint, TActor> _tempActors;
+		private readonly Dictionary<ObjectType, PrefabData> _prefabs;
+		private readonly Dictionary<Aspect, Actor>[] _enables;
+		private readonly Dictionary<Aspect, Actor>[] _disables;
+
+		private readonly Dictionary<Aspect, Actor> _buffer;
+
+		public void AddPrefab(ObjectType type, Actor actorPrefab, Aspect aspectPrefab, int capacity)
+		{
+			if (_prefabs.ContainsKey(type))
+			{
+				DebugUtility.AddError($"Try add duplicate {nameof(ObjectType)}.{type}");
+				return;
+			}
+
+			//Transform root
+			var root = new GameObject(actorPrefab.Type.ToString() + "Root").transform;
+			root.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+			root.localScale = Vector3.one;
+
+			var data = new PrefabData(actorPrefab, aspectPrefab, root);
+			_prefabs.Add(type, data);
+
+			_enables[(int)type] = new Dictionary<Aspect, Actor>(capacity);
+			var dictionary = new Dictionary<Aspect, Actor>(capacity);
+			_disables[(int)type] = dictionary;			
+			for (int i = 0; i < capacity; i++)
+			{
+				Spawn(in data, out var actor, out var aspect);
+				actor.gameObject.SetActive(false);
+				dictionary.Add(aspect, actor);
+			}
+		}
 
 		#region ICommonPool API
-		public TActor Temp_GetActor(uint identity)
+		public Actor GetActor(Aspect aspect)
 		{
-			//todo check miss (mb public bool TryGetActor(uint identity, out TActor actor)?)
-			return _tempActors[identity];
+#if UNITY_EDITOR
+			//todo add checks
+#endif
+			return _enables[(int)aspect.Collider.Type][aspect];
 		}
 		#endregion
 
 		#region ICorePool API
-		public TAspect Temp_GetAspect()
+		public Aspect GetAspect(ObjectType type)
 		{
-			var aspect = (TAspect)_prefabAspect.Clone();
-			var behaviour = Object.Instantiate(_prefabActor);
-
-			var id = ++_identity;
-			aspect.Identity = id;
-			behaviour.Identity = id;
-			_tempAspects.Add(id, aspect);
-			_tempActors.Add(id, behaviour);
-
+			var actor = default(Actor);
+			var aspect = default(Aspect);
+			foreach (var pair in _disables[(int)type])
+			{
+				if (_buffer.ContainsKey(pair.Key)) continue;
+				(aspect, actor) = pair;
+				actor.gameObject.SetActive(true);
+				break;
+			}
+			if(aspect == null)
+			{
+				Spawn(_prefabs[type], out actor, out aspect);
+				_buffer.Add(aspect, actor);
+			}
 			return aspect;
 		}
+		public T GetAspect<T>(ObjectType type)
+			where T : Aspect
+			=> GetAspect(type) as T;
 
-		public void Temp_ReturnAspect(TAspect aspect)
+		public void ReturnAspect(Aspect aspect)
 		{
-			_tempReturned.Push(aspect.Identity);
+			_buffer.Add(aspect, _enables[(int)aspect.Type][aspect]);
 		}
 
-		private Stack<uint> _tempReturned = new (32);
-
-		public void Temp_ClearReturnedAspects()
+		public void ConfirmChanged()
 		{
-			while(_tempReturned.Count > 0)
+			//3 state
+			foreach(var pair in _buffer)
 			{
-				var identity = _tempReturned.Pop();
+				var type = (int)pair.Key.Type;
+				//1. Reuse (move: _disables -> _enables)
+				if (_disables[type].Remove(pair.Key))
+				{
+					_enables[type].Add(pair.Key, pair.Value);
+				}
+				//2. Returned (move: _enables -> _disables)
+				if (_enables[type].Remove(pair.Key))
+				{
+					_disables[type].Add(pair.Key, pair.Value);
+				}
+				//3. New (add:  _enables)
+				else
+				{
+					_enables[type].Add(pair.Key, pair.Value);
+				}
+				//todo 4. can Create and Return in one frame? (error...)
+				pair.Value.gameObject.SetActive(false);
+			}
 
-				var behaviour = _tempActors[identity];
-				Object.Destroy(behaviour.gameObject);
-
-				_tempAspects.Remove(identity);
-				_tempActors.Remove(identity);
-			}			
+			_buffer.Clear();
 		}
-#endregion
 
-		public ObjectPool(TActor prefabB, TAspect prefabA, int capacity)
+		public IEnumerable<Aspect> GetEnumerable(int mask)
+			=> new Enumerable(_enables, mask);
+		#endregion
+
+		public ObjectPool()
 		{
-			(_prefabAspect, _prefabActor) = (prefabA, prefabB);
-			(_tempAspects, _tempActors) = (new(capacity), new(capacity));
-			//todo
-			//_aspects = new List<TAspect>(capacity);
-			//todo init 
+			var size = System.Enum.GetValues(typeof(ObjectType)).Length;
+			_prefabs = new Dictionary<ObjectType, PrefabData>(size);
+			_enables = new Dictionary<Aspect, Actor>[size];
+			_disables = new Dictionary<Aspect, Actor>[size];
+			_buffer = new Dictionary<Aspect, Actor>(8);//todo magic number?
 		}
 
-		public IEnumerator<TAspect> GetEnumerator()
-			=> _tempAspects.Values.GetEnumerator();
-
-		IEnumerator IEnumerable.GetEnumerator()
-			=> GetEnumerator();
+		private void Spawn(in PrefabData data, out Actor actor, out Aspect aspect)
+		{
+			actor = Object.Instantiate(data.Actor, data.Root);
+			aspect = data.Aspect.Clone();
+			aspect.InstanceID = actor.GetHashCode();
+		}
 	}
 
-	internal interface ICommonPool<TActor>
-		where TActor : MonoBehaviour
+	internal interface IActorPool
 	{
-		TActor Temp_GetActor(uint identity);
-	}
-
-	
+		Actor GetActor(Aspect aspect);
+	}	
 }

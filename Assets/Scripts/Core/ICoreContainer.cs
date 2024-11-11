@@ -4,7 +4,9 @@ namespace Asteroids.Core
 {
 	public interface ICoreContainer
 	{
-		ref ShipAspect PlayerAspect { get; }
-		ICorePool<ColliderAspect> ProjectileAspects { get; }
+		IAspectPool Aspects { get; }
+		ShipAspect Player { get; }
+		ref GameData Data { get; }
+		ref Rect Screen { get; }
 	}
 }

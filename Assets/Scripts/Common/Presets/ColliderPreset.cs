@@ -2,7 +2,7 @@
 
 namespace Asteroids.Common.Presets
 {
-	[CreateAssetMenu(fileName = "NewColliderPreset", menuName = "Presets/Collider", order = 1)]
+	[CreateAssetMenu(fileName = "NewColliderPreset", menuName = "Presets/Collider actor", order = 2)]
 	public class ColliderPreset : ScriptableObject
 	{
 		[field: SerializeField, Min(0.1f)]

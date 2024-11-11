@@ -1,4 +1,6 @@
-﻿namespace Asteroids.Core.Systems
+﻿using Asteroids.Core.Aspects;
+
+namespace Asteroids.Core.Systems
 {
 	public class ColliderLifetimeSystem : BaseSystem<ICoreContainer>
 	{
@@ -7,13 +9,12 @@
 		public override void OnUpdate(in float time, in float delta)
 		{
 			//todo add asteroidsAspects
-			foreach (var collider in Container.ProjectileAspects)
+			foreach (ColliderAspect collider in Container.Aspects.WithoutShips())
 			{
 				if (collider.TimeToDie > time) continue;
-				Container.ProjectileAspects.Temp_ReturnAspect(collider);
+				Container.Aspects.ReturnAspect(collider);
 			}
-			//todo temp solution
-			Container.ProjectileAspects.Temp_ClearReturnedAspects();
+			Container.Aspects.ConfirmChanged();
 		}
 	}
 }

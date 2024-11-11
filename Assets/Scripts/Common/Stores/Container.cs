@@ -1,63 +1,77 @@
 ﻿using Asteroids.Common.Actors;
-using Asteroids.Common.Presets;
+using Asteroids.Common.Presentation;
 using Asteroids.Core;
 using Asteroids.Core.Aspects;
 using Asteroids.Core.Datas;
 using Unity.Mathematics;
 
-using UnityEngine;
+using static Asteroids.Common.SceneSettings;
 
 namespace Asteroids.Common.Stores
 {
 	internal class Container : ICommonContainer, ICoreContainer
 	{
-		private ShipAspect _player;
-		//todo think about: в чем разница между снарядом и астеройдом глобальная? Только визуал и физ слой
-		private ObjectPool<ColliderActor, ColliderAspect> _projectilePool;
-		private ObjectPool<ColliderActor, ColliderAspect> _asteroidPool;
-		private ObjectPool<ShipActor, ShipAspect> _alienPool;
+		private ObjectPool _pool;
+		private GameData _gameData;
+		private Core.Rect _rect;
 
+		public IActorPool Actors => _pool;
+		public ShipActor PlayerActor { get; }
+		public IAspectPool Aspects => _pool;
+		public ShipAspect Player { get; }
+		public ref GameData Data => ref _gameData;
+		public ref Core.Rect Screen => ref _rect;
+		public PresentationController Presentation { get; }
 
-		public ref ShipAspect PlayerAspect => ref _player;
-		public ShipActor PlayerBehaviour { get; }
+		
 
-		public ICorePool<ColliderAspect> ProjectileAspects => _projectilePool;
-		public ICommonPool<ColliderActor> ProjectileBehaviours => _projectilePool;
-
-		//public Dictionary<uint, ShipAspect> Aliens;
-		//public Dictionary<uint, ShipBehaviour> AliensMono;
-
-
-		public Container(SceneSettings settings)
+		public Container(SceneSettings settings, PresentationController presentation)
 		{
-			var instance = settings.Player.Prefab;
-			_player = CreateShip(settings.Player.Preset, ref instance);
-			PlayerBehaviour = instance;
+			_pool = new ObjectPool();
+			//todo magic value
+			_gameData = new GameData(new int[] {1, 1, 1, 1, 1, 1}, 
+				settings.SpawnSmallAsteroids,
+				settings.AsteroidSpawnInterval, 
+				settings.AlienSpawnInterval);
+			Presentation = presentation;
 
-			var colliderAspect = new ColliderAspect(
-				new CollisionData(settings.Projectile.Prefab.Radius, settings.Projectile.Prefab.Type),
-				settings.Projectile.Preset.MoveSpeed, 
-				settings.Projectile.Preset.Lifetime);
-			_projectilePool = new ObjectPool<ColliderActor, ColliderAspect>(
-				settings.Projectile.Prefab, colliderAspect, 32);
-			//_asteroidPool = new ObjectPool<ColliderActor, ColliderAspect>();
-			//_alienPool = new ObjectPool<ShipActor, ShipAspect>();
+			//Init Pool data
+			//todo magic numbers?
+			_pool.AddPrefab(ObjectType.Player, settings.Player.Prefab, 
+				CreateAspect(settings.Player), 1);
+			_pool.AddPrefab(ObjectType.Alien, settings.Alien.Prefab,
+				CreateAspect(settings.Alien), 4);
+			_pool.AddPrefab(ObjectType.BigAsteroid, settings.BigAsteroid.Prefab,
+				CreateAspect(settings.BigAsteroid), 8);
+			_pool.AddPrefab(ObjectType.SmallAsteroid, settings.SmallAsteroid.Prefab,
+				CreateAspect(settings.SmallAsteroid), 32);
+			_pool.AddPrefab(ObjectType.ProjectilePlayer, settings.ProjectilePlayer.Prefab,
+				CreateAspect(settings.ProjectilePlayer), 16);
+			_pool.AddPrefab(ObjectType.ProjectileAlien, settings.ProjectileAlien.Prefab,
+				CreateAspect(settings.ProjectileAlien), 8);
+
+			//for short getter
+			Player = _pool.GetAspect<ShipAspect>(ObjectType.Player);
+			_pool.ConfirmChanged();
+			PlayerActor = _pool.GetActor(Player) as ShipActor;
 		}
 
-		//todo move? this is pure data
-		//todo create Pools for asteroids and aliens
-		//todo maybe create SpawnSystem for player? (and for aliens)
-		public ShipAspect CreateShip(ShipPreset preset, ref ShipActor behaviour)
+		private ShipAspect CreateAspect(ShipSettings settings)
 		{
+			var (actor, preset) = (settings.Prefab, settings.Preset);
 			var mobility = new ShipMobility(math.radians(preset.RotationSpeed),
 				preset.Acceleration, preset.Deceleration, preset.MaxVelocity);
-			var weapon = new ShipWeapon(behaviour.FireOffset, preset.FireReload, preset.LaserReload);
-			var aspect = new ShipAspect(new CollisionData(behaviour.Radius, behaviour.Type), mobility, weapon);
+			var weapon = new ShipWeapon(actor.FireOffset, preset.FireReload, preset.LaserReload);
 
-			behaviour = Object.Instantiate(behaviour);
-			//todo ??? aspect.Identity = behaviour.Identity = ++_identity;
-			//todo set player in center screen and sync this
-			return aspect;
+			return new ShipAspect(new CollisionData(actor.Radius, actor.Type), mobility, weapon);
+		}
+
+		private ColliderAspect CreateAspect(ColliderSettings settings)
+		{
+			var (actor, preset) = (settings.Prefab, settings.Preset);
+			return new ColliderAspect(
+				new CollisionData(actor.Radius, actor.Type),
+				preset.MoveSpeed, preset.Lifetime);
 		}
 	}
 }

@@ -1,7 +1,4 @@
-using Asteroids.Common.InSystems;
-using Asteroids.Common.Actors;
-using Asteroids.Common.OutSystems;
-using Asteroids.Common.Presets;
+using Asteroids.Common.Systems;
 using Asteroids.Common.Stores;
 using Asteroids.Core;
 using Asteroids.Core.Systems;
@@ -9,7 +6,7 @@ using Asteroids.Core.Systems;
 using System;
 using Unity.Profiling;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
+using Asteroids.Common.Presentation;
 
 namespace Asteroids.Common
 {
@@ -19,26 +16,33 @@ namespace Asteroids.Common
 
         private readonly ISystem[] _systems;
 
-		public World(SceneSettings settings) 
+		public World(SceneSettings settings, PresentationController presentation) 
         {
-			var container = new Container(settings);
+			var container = new Container(settings, presentation);
 
-            _systems = new ISystem[]
-		    {
+			_systems = new ISystem[]
+			{
 				//Inhale data systems (Inputs)
-				new InPlayerSystem(container),
+				new InsertionCameraSystem(container),
+				new InsertionPlayerInputSystem(container),
 				//---------------------------------------
 				//GameLogic (without UnityEngine) systems
-				new PlayerVelocitySystem(container),
-				new PlayerTransformSystem(container),
-				new PlayerFireSystem(container),
 				new ColliderLifetimeSystem(container),
-				new ColliderMoveSystem(container),
-				new ColliderCollisionSystem(container),
+				new AlienAndBigAsteroidSpawnSystem(container),
+				new AlienInputSystem(container),
+				new ShipFireSystem(container),
+				new PlayerLaserSystem(container),
+				new ShipVelocitySystem(container),
+				new ShipTransformSystem(container),
+				new ColliderTransformSystem(container),
+				new AspectTeleportSystem(container),
+				new AspectCollisionSystem(container),
 				//---------------------------------------
 				//Exhale data systems (Outputs)
-				new OutPlayerSystem(container),
-				new RendererSystem(container),
+				new PresentationGameOverSystem(container),
+				new PresentationActorTransformSystem(container),
+				new PresentationPlayerLaserSystem(container),
+				new PresentationUISystem(container),
 			};
 		}
 

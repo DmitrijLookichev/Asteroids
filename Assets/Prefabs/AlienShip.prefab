@@ -141,7 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38403687e021ece41a135393de4dc21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Type>k__BackingField: 2
+  <Type>k__BackingField: 1
   <Radius>k__BackingField: 0.4
   <FireOffset>k__BackingField: {x: 0, y: 0, z: 0}
-  TestOffset: {x: 0, y: 0, z: 0}

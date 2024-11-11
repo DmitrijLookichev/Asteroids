@@ -1,4 +1,5 @@
 using Asteroids.Common.Actors;
+using Asteroids.Common.Presentation;
 using Asteroids.Common.Presets;
 
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Asteroids.Common
 		private World _world;
 
 		[SerializeField]
+		private PresentationController _presentation;
+		[SerializeField]
 		private SceneSettings _settings;
 
 		private void Awake()
@@ -17,7 +20,10 @@ namespace Asteroids.Common
 			if (CheckNullRefs()) return;
 #endif
 
-			_world = new World(_settings);
+			_world = new World(_settings, _presentation);
+
+			//UnityEditorInternal.InternalEditorUtility
+			
 		}
 
 		private void Update()
@@ -44,12 +50,14 @@ namespace Asteroids.Common
 				DropError(nameof(ShipActor), ref error);
 			if (_settings.Player.Preset == null
 				|| _settings.Alien.Preset == null)
-				DropError(nameof(ShipPreset), ref error);
-			if (_settings.Projectile.Prefab == null
+				DropError(nameof(ShipActorPreset), ref error);
+			if (_settings.ProjectilePlayer.Prefab == null
+				|| _settings.ProjectileAlien.Prefab == null
 				|| _settings.BigAsteroid.Prefab == null
 				|| _settings.SmallAsteroid.Prefab == null)
-				DropError(nameof(ColliderActor), ref error);
-			if (_settings.Projectile.Preset == null
+				DropError(nameof(Actor), ref error);
+			if (_settings.ProjectilePlayer.Preset == null
+				|| _settings.ProjectileAlien.Preset == null
 				|| _settings.BigAsteroid.Preset == null
 				|| _settings.SmallAsteroid.Preset == null)
 				DropError(nameof(ColliderPreset), ref error);

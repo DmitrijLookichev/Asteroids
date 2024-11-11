@@ -4,47 +4,36 @@ using Unity.Mathematics;
 namespace Asteroids.Core.Aspects
 {
 	//todo struct in Container??
-	public class ShipAspect : IAspect
+	public class ShipAspect : Aspect
 	{
-		private CollisionData _collider;
-		private RigidTransform _transform;
 		private ShipMobility _mobility;
 		private ShipWeapon _weapon;
 		private ShipInput _input;
 
 		private float3 _velocity;
 		private float _fireReload;
-
-		public uint Identity { get; set; }
+		private float _laserReload;
 
 		//Components
-		public ref CollisionData Collider => ref _collider;
-		public ref RigidTransform Transform { get => ref _transform; }
-		public ref ShipMobility Mobility { get => ref _mobility; }
-		public ref ShipWeapon Weapon { get => ref _weapon; }
-		public ref ShipInput Input { get => ref _input; }
+		//todo нужно всего два экземпляра в проекте - для игркоа и для пришельцев
+		public ref ShipMobility Mobility => ref _mobility;
+		public ref ShipWeapon Weapon => ref _weapon;
+		public ref ShipInput Input => ref _input;
 
 		//Datas
-		public ref float3 Velocity { get => ref _velocity; }
-		public ref float FireReload { get => ref _fireReload; }
+		public ref float3 Velocity => ref _velocity;
+		public ref float FireReload => ref _fireReload;
+		public ref float LaserReload => ref _laserReload;
 
-		public ShipAspect(CollisionData collider, ShipMobility mobility, ShipWeapon weapon)
+		public ShipAspect(CollisionData collider, ShipMobility mobility, ShipWeapon weapon) : base(collider)
 		{
-			_collider = collider;
-			(Transform, Mobility, Weapon, Input)
-				= (RigidTransform.identity, mobility, weapon, new ShipInput());
+			(Mobility, Weapon, Input)
+				= (mobility, weapon, new ShipInput());
 		}
 
-		[System.Obsolete]//todo
-		public void Teleport(float3 pos, quaternion rot)
+		public override Aspect Clone()
 		{
-			(_transform.pos, _transform.rot) = (pos, rot);
-			DebugUtility.AddLog("Player Teleport");
-		}
-
-		public IAspect Clone()
-		{
-			return new ShipAspect(_collider, _mobility, _weapon);
+			return new ShipAspect(Collider, _mobility, _weapon);
 		}
 	}
 }

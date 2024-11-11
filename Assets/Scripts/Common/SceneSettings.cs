@@ -1,5 +1,6 @@
 ﻿using Asteroids.Common.Actors;
 using Asteroids.Common.Presets;
+using Asteroids.Core;
 
 using UnityEngine;
 
@@ -15,14 +16,14 @@ namespace Asteroids.Common
 			[SerializeField]
 			public ShipActor Prefab;
 			[SerializeField]
-			public ShipPreset Preset;
+			public ShipActorPreset Preset;
 		}
 
 		[System.Serializable]
 		public struct ColliderSettings
 		{
 			[SerializeField]
-			public ColliderActor Prefab;
+			public Actor Prefab;
 			[SerializeField]
 			public ColliderPreset Preset;
 		}
@@ -33,11 +34,20 @@ namespace Asteroids.Common
 		[field: SerializeField]
 		public ShipSettings Alien { get; private set; }
 		[field: SerializeField]
-		public ColliderSettings Projectile { get; private set; }
+		public ColliderSettings ProjectilePlayer { get; private set; }
+		[field: SerializeField]
+		public ColliderSettings ProjectileAlien { get; private set; }
 		[field: SerializeField]
 		public ColliderSettings BigAsteroid { get; private set; }
 		[field: SerializeField]
 		public ColliderSettings SmallAsteroid { get; private set; }
+
+		[field: SerializeField, Space(10f)]
+		public Interval AsteroidSpawnInterval { get; private set; } = new Interval(3f, 10f);
+		[field: SerializeField]
+		public Interval AlienSpawnInterval { get; private set; } = new Interval(7f, 15f);
+		[field: SerializeField]
+		public IntervalInt SpawnSmallAsteroids { get; private set; } = new IntervalInt(2, 4);
 
 		//todo добавить настройки сцены:
 		//скока очков за кого

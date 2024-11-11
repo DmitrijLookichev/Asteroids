@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField:
     Prefab: {fileID: 2619708796238005831, guid: ec3cc42efc47a6d4db2e77b67257d946, type: 3}
-    Preset: {fileID: 11400000, guid: 6d0abf6c518c26842a61b433b317cdcc, type: 2}
+    Preset: {fileID: 11400000, guid: bf5e37ab20d8ef24dad84f2c37143651, type: 2}
   <Alien>k__BackingField:
     Prefab: {fileID: 7188063274777716902, guid: 59ddc9aa9263ff44aba5a9d857757bfd, type: 3}
-    Preset: {fileID: 11400000, guid: 4af2af99150369343b81f2a1cde0b909, type: 2}
-  <Projectile>k__BackingField:
+    Preset: {fileID: 11400000, guid: 1f21ee62868f2ac47ab22f459bf15f7a, type: 2}
+  <ProjectilePlayer>k__BackingField:
     Prefab: {fileID: 7406018337478212002, guid: 3f5d7e776e533aa459daac99ace7172d, type: 3}
+    Preset: {fileID: 11400000, guid: 9cb59f81278dbf84f91df2763397e345, type: 2}
+  <ProjectileAlien>k__BackingField:
+    Prefab: {fileID: 7406018337478212002, guid: 05b41458a8454844296dea7ef613dec9, type: 3}
     Preset: {fileID: 11400000, guid: 9cb59f81278dbf84f91df2763397e345, type: 2}
   <BigAsteroid>k__BackingField:
     Prefab: {fileID: 8389288997186194035, guid: 2bc0237bad94a1f4b93e6d1cbc5fc28f, type: 3}
@@ -27,3 +30,12 @@ MonoBehaviour:
   <SmallAsteroid>k__BackingField:
     Prefab: {fileID: 6732164541303080479, guid: 31917f44f36129a48a941061085479d4, type: 3}
     Preset: {fileID: 11400000, guid: 92de4f793cc50544093179fc3975311f, type: 2}
+  <AsteroidSpawnInterval>k__BackingField:
+    Min: 3
+    Max: 10
+  <AlienSpawnInterval>k__BackingField:
+    Min: 7
+    Max: 15
+  <SpawnSmallAsteroids>k__BackingField:
+    Min: 2
+    Max: 4
