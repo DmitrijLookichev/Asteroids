@@ -6,7 +6,6 @@ namespace Asteroids.Core.Systems
 	public class AlienAndBigAsteroidSpawnSystem : BaseSystem<ICoreContainer>
 	{
 		private Random _random;
-
 		public AlienAndBigAsteroidSpawnSystem(ICoreContainer container) : base(container)
 		{
 			_random = new Random(1995);

@@ -49,8 +49,9 @@ namespace Asteroids.Core.Systems
 				{
 					Container.Aspects.ReturnAspect(aspect);
 					Container.Data.AddScore(aspect.Type);
-					//todo hit! and draw
-					DebugUtility.AddLog("Laser Kill!!");
+					//for create small asteroids
+					if (aspect.Type is ObjectType.BigAsteroid)
+						Container.Data.SmallAsteroids.Push(center);
 				}
 			}
 		}

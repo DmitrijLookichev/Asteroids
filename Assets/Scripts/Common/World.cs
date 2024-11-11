@@ -28,6 +28,7 @@ namespace Asteroids.Common
 				//---------------------------------------
 				//GameLogic (without UnityEngine) systems
 				new ColliderLifetimeSystem(container),
+				new SmallAsteroidSpawnSystem(container),
 				new AlienAndBigAsteroidSpawnSystem(container),
 				new AlienInputSystem(container),
 				new ShipWeaponSystem(container),

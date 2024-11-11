@@ -5,13 +5,9 @@ namespace Asteroids.Core.Systems
 {
 	public class AspectCollisionSystem : BaseSystem<ICoreContainer>
 	{
-		private Random _random;
 		private float _time;
 
-		public AspectCollisionSystem(ICoreContainer container) : base(container) 
-		{
-			_random = new Random(1995);
-		}
+		public AspectCollisionSystem(ICoreContainer container) : base(container) {}
 
 		public override void OnUpdate(in float time, in float delta)
 		{
@@ -62,31 +58,18 @@ namespace Asteroids.Core.Systems
 					break;
 				//If Asteroid - remove and create smalls
 				case ObjectType.BigAsteroid:
-					SpawnSmallAsteroids(aspect);
+					Container.Data.SmallAsteroids.Push(aspect.Transform.pos);
 					goto case ObjectType.SmallAsteroid;
 				//remove
 				case ObjectType.SmallAsteroid:
 				case ObjectType.Alien:
+					Container.Data.AddScore(aspect.Type);
+					goto case ObjectType.ProjectilePlayer;
 				case ObjectType.ProjectilePlayer:
 				case ObjectType.ProjectileAlien:
 					Container.Aspects.ReturnAspect(aspect);
 					break;
 			}
-		}
-
-		//todo can i move it in another system?
-		private void SpawnSmallAsteroids(Aspect aspect)
-		{
-			var pos = aspect.Transform.pos;
-			var interval = Container.Data.SpawnSmallAsteroids;
-			var count = _random.NextInt(interval.Min, interval.Max + 1);
-			for(int i = 0; i < count; ++i)
-			{
-				var asteroid = Container.Aspects.GetAspect<ColliderAspect>(ObjectType.SmallAsteroid);
-				asteroid.Transform.pos = pos;
-				asteroid.Transform.rot = quaternion.Euler(0f, 0f, _random.NextFloat(0f, 359f));
-				asteroid.TimeToDie = _time + asteroid.Lifetime;
-			}
-		}
+		}		
 	}
 }
