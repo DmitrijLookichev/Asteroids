@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField:
     Prefab: {fileID: 2619708796238005831, guid: ec3cc42efc47a6d4db2e77b67257d946, type: 3}
-    Preset: {fileID: 11400000, guid: bf5e37ab20d8ef24dad84f2c37143651, type: 2}
+    Preset: {fileID: 11400000, guid: 76253462a0d20f64e81c4c4fb60d7bc4, type: 2}
   <Alien>k__BackingField:
     Prefab: {fileID: 7188063274777716902, guid: 59ddc9aa9263ff44aba5a9d857757bfd, type: 3}
     Preset: {fileID: 11400000, guid: 1f21ee62868f2ac47ab22f459bf15f7a, type: 2}

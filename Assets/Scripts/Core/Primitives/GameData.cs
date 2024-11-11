@@ -12,7 +12,6 @@ namespace Asteroids.Core
 
 		public float AsteroidSpawnTime;
 		public float AlienSpawnTime;
-		public (float Time, float3 Start, float3 End) Laser;
 		public int Score { get; private set; }
 		
 
@@ -25,7 +24,6 @@ namespace Asteroids.Core
 			Interval asteroidSpawnInterval, Interval alienSpawnInterval)
 		{
 			_costs = costs;
-			Laser = default;
 			(AsteroidSpawnInterval, AlienSpawnInterval, SpawnSmallAsteroids) 
 				= (asteroidSpawnInterval, alienSpawnInterval, spawnSmallAsteroids);
 

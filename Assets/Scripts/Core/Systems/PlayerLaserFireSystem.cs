@@ -4,15 +4,17 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
-	public class PlayerLaserSystem : BaseSystem<ICoreContainer>
+	public class PlayerLaserFireSystem : BaseSystem<ICoreContainer>
 	{
-		public PlayerLaserSystem(ICoreContainer container) : base(container){}
+		public PlayerLaserFireSystem(ICoreContainer container) : base(container){}
 
 		public override void OnUpdate(in float time, in float delta)
 		{
 			var player = Container.Player;
-			if (!player.Input.Get(Datas.ShipInput.Values.Laser)
-				|| player.LaserReload > time) return;
+			ref var laser = ref player.Laser;
+
+			if (player.LaserCharges == 0) return;
+			if (!player.Input.Get(Datas.ShipInput.Values.Laser)) return;
 
 			ref var transform = ref Container.Player.Transform;
 			//Max length in screen
@@ -20,17 +22,18 @@ namespace Asteroids.Core.Systems
 				new float2(Container.Screen.xMin, Container.Screen.yMin) -
 				new float2(Container.Screen.xMax, Container.Screen.yMax));
 
-			var startPoint = transform.pos;
+			var offset = math.rotate(transform.rot, player.Weapon.WeaponOffset);
+			var startPoint = transform.pos + offset;
 			var endPoint = startPoint + math.mul(transform.rot, math.up()) * distance;
 
 			CalcLaserCollision(in startPoint, in endPoint, Container.Aspects.Aliens());
 			CalcLaserCollision(in startPoint, in endPoint, Container.Aspects.Asteroids());
 
-			//todo temp magic number
-			Container.Data.Laser = (time + 5f, startPoint, endPoint);
+			//Update stats
+			--player.LaserCharges;
+			player.LaserVisualization = new PlayerShipAspect
+				.LaserVisual(startPoint, endPoint, time + player.Laser.VisualDuration);
 			Container.Aspects.ConfirmChanged();
-
-			player.LaserReload = time + player.Weapon.LaserReload;
 		}
 
 		private void CalcLaserCollision(in float3 start, in float3 end, IEnumerable<Aspect> aspects)

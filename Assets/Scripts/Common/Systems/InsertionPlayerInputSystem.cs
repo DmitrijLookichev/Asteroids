@@ -22,7 +22,7 @@ namespace Asteroids.Common.Systems
 			input.Rotate = _controls.Ship.Rotate.ReadValue<float>();
 			input.Set(ShipInput.Values.Acceleration, _controls.Ship.Acceleration.IsPressed());
 			input.Set(ShipInput.Values.Fire, _controls.Ship.Fire.IsPressed());
-			input.Set(ShipInput.Values.Laser, _controls.Ship.Laser.IsPressed());
+			input.Set(ShipInput.Values.Laser, _controls.Ship.Laser.WasPressedThisFrame());
         }
 
 		public void Dispose()

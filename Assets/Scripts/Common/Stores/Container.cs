@@ -3,7 +3,6 @@ using Asteroids.Common.Presentation;
 using Asteroids.Core;
 using Asteroids.Core.Aspects;
 using Asteroids.Core.Datas;
-using Unity.Mathematics;
 
 using static Asteroids.Common.SceneSettings;
 
@@ -15,15 +14,19 @@ namespace Asteroids.Common.Stores
 		private GameData _gameData;
 		private Core.Rect _rect;
 
-		public IActorPool Actors => _pool;
-		public ShipActor PlayerActor { get; }
+		#region ICoreContainer
 		public IAspectPool Aspects => _pool;
-		public ShipAspect Player { get; }
+		public PlayerShipAspect Player { get; }
 		public ref GameData Data => ref _gameData;
 		public ref Core.Rect Screen => ref _rect;
-		public PresentationController Presentation { get; }
+		#endregion
 
-		
+
+		#region ICommonContainer
+		public IActorPool Actors => _pool;
+		public ShipActor PlayerActor { get; }
+		public PresentationController Presentation { get; }
+		#endregion
 
 		public Container(SceneSettings settings, PresentationController presentation)
 		{
@@ -51,9 +54,20 @@ namespace Asteroids.Common.Stores
 				CreateAspect(settings.ProjectileAlien), 8);
 
 			//for short getter
-			Player = _pool.GetAspect<ShipAspect>(ObjectType.Player);
+			Player = _pool.GetAspect<PlayerShipAspect>(ObjectType.Player);
 			_pool.ConfirmChanged();
 			PlayerActor = _pool.GetActor(Player) as ShipActor;
+		}
+
+		private ShipAspect CreateAspect(PlayerShipSettings settings)
+		{
+			var (actor, preset) = (settings.Prefab, settings.Preset);
+			var mobility = new ShipMobility(preset.RotationSpeed,
+				preset.Acceleration, preset.Deceleration, preset.MaxVelocity);
+			var weapon = new ShipWeapon(actor.FireOffset, preset.FireReload);
+			var laser = new ShipLaser(preset.LaserReload, preset.LaserCharges, preset.VisualDuration);
+
+			return new PlayerShipAspect(new CollisionData(actor.Radius, actor.Type), mobility, weapon, laser);
 		}
 
 		private ShipAspect CreateAspect(ShipSettings settings)
@@ -61,7 +75,7 @@ namespace Asteroids.Common.Stores
 			var (actor, preset) = (settings.Prefab, settings.Preset);
 			var mobility = new ShipMobility(preset.RotationSpeed,
 				preset.Acceleration, preset.Deceleration, preset.MaxVelocity);
-			var weapon = new ShipWeapon(actor.FireOffset, preset.FireReload, preset.LaserReload);
+			var weapon = new ShipWeapon(actor.FireOffset, preset.FireReload);
 
 			return new ShipAspect(new CollisionData(actor.Radius, actor.Type), mobility, weapon);
 		}

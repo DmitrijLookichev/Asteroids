@@ -6,11 +6,10 @@ namespace Asteroids.Core.Datas
 	{
 		public readonly float3 WeaponOffset;
 		public readonly float FireReload;
-		public readonly float LaserReload;
 
-		public ShipWeapon(float3 weaponOffset, float fireReload, float laserReload)
+		public ShipWeapon(float3 weaponOffset, float fireReload)
 		{
-			(WeaponOffset, FireReload, LaserReload) = (weaponOffset, fireReload, laserReload);
+			(WeaponOffset, FireReload) = (weaponOffset, fireReload);
 		}
 	}
 }

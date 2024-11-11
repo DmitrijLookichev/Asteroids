@@ -10,15 +10,15 @@ namespace Asteroids.Common.Systems
 		public override void OnUpdate(in float time, in float delta)
 		{
 			var renderer = Container.PlayerActor.LineRenderer;
-			ref var laserData = ref Container.Data.Laser;
-			if (laserData.Time < time)
+			var laserData = Container.Player.LaserVisualization;
+			if (laserData.Duration > time)
 			{
 				renderer.positionCount = 2;
 				renderer.SetPosition(0, laserData.Start);
 				renderer.SetPosition(1, laserData.End);
 			}
 			else if (renderer.positionCount > 0)
-				renderer.positionCount = 2;
+				renderer.positionCount = 0;
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace Asteroids.Core.Aspects
 
 		private float3 _velocity;
 		private float _fireReload;
-		private float _laserReload;
+		
 
 		//Components
 		//todo нужно всего два экземпляра в проекте - для игркоа и для пришельцев
@@ -23,7 +23,7 @@ namespace Asteroids.Core.Aspects
 		//Datas
 		public ref float3 Velocity => ref _velocity;
 		public ref float FireReload => ref _fireReload;
-		public ref float LaserReload => ref _laserReload;
+		
 
 		public ShipAspect(CollisionData collider, ShipMobility mobility, ShipWeapon weapon) : base(collider)
 		{

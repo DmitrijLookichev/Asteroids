@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Asteroids.Common.Presets
 {
-	[CreateAssetMenu(fileName = "New{", menuName = "Presets/Ship Actor", order = 1)]
+	[CreateAssetMenu(fileName = "NewShipActorPreset", menuName = "Presets/Ship Actor", order = 1)]
 	public class ShipActorPreset : ScriptableObject
 	{
 		[field: SerializeField, Min(0.1f)]
@@ -15,7 +15,5 @@ namespace Asteroids.Common.Presets
 		public float MaxVelocity { get; private set; } = 1f;
 		[field: SerializeField, Min(0.1f)]
 		public float FireReload { get; private set; } = 1f;
-		[field: SerializeField, Min(0.1f)]
-		public float LaserReload { get; private set; } = 1f;
 	}
 }

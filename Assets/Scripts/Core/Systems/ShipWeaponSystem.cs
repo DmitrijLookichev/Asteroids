@@ -3,9 +3,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
-	public class ShipFireSystem : BaseSystem<ICoreContainer>
+	public class ShipWeaponSystem : BaseSystem<ICoreContainer>
 	{
-		public ShipFireSystem(ICoreContainer container) : base(container) { }
+		public ShipWeaponSystem(ICoreContainer container) : base(container) { }
 
 		public override void OnUpdate(in float time, in float delta)
 		{

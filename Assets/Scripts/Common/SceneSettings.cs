@@ -9,7 +9,16 @@ namespace Asteroids.Common
 	[CreateAssetMenu(fileName = "NewSceneSettings", menuName = "Presets/Scene Config", order = 0)]
 	public class SceneSettings : ScriptableObject
 	{
-#region Internal structs
+		#region Internal structs
+		[System.Serializable]
+		public struct PlayerShipSettings
+		{
+			[SerializeField]
+			public ShipActor Prefab;
+			[SerializeField]
+			public PlayerShipActorPreset Preset;
+		}
+
 		[System.Serializable]
 		public struct ShipSettings
 		{
@@ -27,10 +36,10 @@ namespace Asteroids.Common
 			[SerializeField]
 			public ColliderPreset Preset;
 		}
-#endregion
+		#endregion
 
 		[field: SerializeField]
-		public ShipSettings Player { get; private set; }
+		public PlayerShipSettings Player { get; private set; }
 		[field: SerializeField]
 		public ShipSettings Alien { get; private set; }
 		[field: SerializeField]

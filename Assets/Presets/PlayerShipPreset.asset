@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab37f3d7ba55d964dac70713275b8f0b, type: 3}
+  m_Script: {fileID: 11500000, guid: 92a7887ac6f9f0447a50c12faf8f3a6f, type: 3}
   m_Name: PlayerShipPreset
   m_EditorClassIdentifier: 
-  <RotationSpeed>k__BackingField: 2.5
+  <RotationSpeed>k__BackingField: 2.4
   <Acceleration>k__BackingField: 1
   <Deceleration>k__BackingField: 0.7
   <MaxVelocity>k__BackingField: 2
   <FireReload>k__BackingField: 1
-  <LaserReload>k__BackingField: 1
+  <LaserReload>k__BackingField: 3
+  <LaserCharges>k__BackingField: 3
+  <VisualDuration>k__BackingField: 0.5
