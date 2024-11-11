@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826688d0c451f74488a8969ff60ed1c7, type: 3}
   m_Name: SmallAsteroidPreset
   m_EditorClassIdentifier: 
-  <MoveSpeed>k__BackingField: 5
-  <Lifetime>k__BackingField: 5
+  <MoveSpeed>k__BackingField: 1.5
+  <Lifetime>k__BackingField: 15
