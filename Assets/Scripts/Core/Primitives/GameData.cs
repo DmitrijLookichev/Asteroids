@@ -6,22 +6,25 @@ namespace Asteroids.Core
 { 
 	public struct GameData
 	{
+		private int _score;
 		private readonly int[] _costs;
 
-		public readonly Interval AsteroidSpawnInterval;
-		public readonly Interval AlienSpawnInterval;
-		public readonly IntervalInt SpawnSmallAsteroids;
-
 		public Stack<float3> SmallAsteroids { get; }
+
+		public Interval AsteroidSpawnInterval { get; }
+		public Interval AlienSpawnInterval { get; }
+		public IntervalInt SpawnSmallAsteroids { get; }
+
+		
 		public float AsteroidSpawnTime { get; set; }
 		public float AlienSpawnTime { get; set; }
 
-		public int Score { get; private set; }
+		public int Score => _score;
 
 
 		public void AddScore(ObjectType type)
 		{
-			Score += _costs[(int)type];
+			_score += _costs[(int)type];
 		}
 
 		public GameData(int[] costs, IntervalInt spawnSmallAsteroids,
@@ -34,7 +37,7 @@ namespace Asteroids.Core
 
 			AsteroidSpawnTime = AsteroidSpawnInterval.Min;
 			AlienSpawnTime = AlienSpawnInterval.Max;
-			Score = 0;
+			_score = 0;
 		}
 	}
 }

@@ -32,7 +32,8 @@ namespace Asteroids.Common.Stores
 		{
 			_pool = new ObjectPool();
 			//todo magic value
-			_gameData = new GameData(new int[] {1, 1, 1, 1, 1, 1}, 
+			_gameData = new GameData(
+				settings.GetPoints, 
 				settings.SpawnSmallAsteroids,
 				settings.AsteroidSpawnInterval, 
 				settings.AlienSpawnInterval);

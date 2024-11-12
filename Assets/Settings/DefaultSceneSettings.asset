@@ -39,3 +39,10 @@ MonoBehaviour:
   <SpawnSmallAsteroids>k__BackingField:
     Min: 2
     Max: 4
+  _points:
+  - Type: 1
+    Points: 5
+  - Type: 2
+    Points: 2
+  - Type: 3
+    Points: 1
