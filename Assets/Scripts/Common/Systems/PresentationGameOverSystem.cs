@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 namespace Asteroids.Common.Systems
 {
+	/// <summary>
+	/// Обработка события окончания игры
+	/// </summary>
 	internal class PresentationGameOverSystem : BaseSystem<ICommonContainer>, IDisposable
 	{
 		public PresentationGameOverSystem(ICommonContainer container) : base(container)	

@@ -2,6 +2,9 @@
 
 namespace Asteroids.Common.Presets
 {
+	/// <summary>
+	/// настройки примитивного аспекта (прожектайлы и астеройды)
+	/// </summary>
 	[CreateAssetMenu(fileName = "NewColliderPreset", menuName = "Presets/Collider actor", order = 2)]
 	public class ColliderPreset : ScriptableObject
 	{

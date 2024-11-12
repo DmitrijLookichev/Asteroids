@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Asteroids.Common.Systems
 {
+	/// <summary>
+	/// Репрезентация игрового состояния в UI
+	/// </summary>
 	internal class PresentationUISystem : BaseSystem<ICommonContainer>
 	{
 		public PresentationUISystem(ICommonContainer container) : base(container) {}

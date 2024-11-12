@@ -5,6 +5,9 @@ using System;
 
 namespace Asteroids.Common.Systems
 {
+	/// <summary>
+	/// Передача в Core пользовательского ввода
+	/// </summary>
 	internal class InsertionPlayerInputSystem : BaseSystem<ICommonContainer>, IDisposable
 	{
 		private PlayerControls _controls;

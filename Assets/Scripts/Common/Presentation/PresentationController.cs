@@ -17,6 +17,7 @@ namespace Asteroids.Common.Presentation
 			public Button Quit { get; private set; }
 		}
 
+		[field: Header("---UI Indicators---")]
 		[field: SerializeField]
 		public TextMeshProUGUI Coordinates { get; private set; }
 		[field: SerializeField]
@@ -32,6 +33,7 @@ namespace Asteroids.Common.Presentation
 		[field: SerializeField]
 		public TextMeshProUGUI Score { get; private set; }
 
+		[field: Header("---Menu---")]
 		[field: SerializeField, Space(15f)]
 		public Menu Pause { get; private set; }
 	}

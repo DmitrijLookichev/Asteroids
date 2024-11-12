@@ -10,7 +10,7 @@ namespace Asteroids.Common.Actors
 		[field: SerializeField]
 		public float Radius { get; private set; }
 
-		protected virtual void OnDrawGizmos()
+		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.green;
 			Gizmos.DrawWireSphere(transform.position, Radius);

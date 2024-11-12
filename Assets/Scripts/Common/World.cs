@@ -10,6 +10,9 @@ using Asteroids.Common.Presentation;
 
 namespace Asteroids.Common
 {
+	/// <summary>
+	/// GameLogic host
+	/// </summary>
 	public class World : IDisposable
     {
 		private readonly ProfilerMarker _marker = new ("Systems.OnUpdate");

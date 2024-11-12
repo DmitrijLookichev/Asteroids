@@ -8,6 +8,9 @@ using static Asteroids.Common.SceneSettings;
 
 namespace Asteroids.Common.Stores
 {
+	/// <summary>
+	/// Хранилище данных для работы систем
+	/// </summary>
 	internal class Container : ICommonContainer, ICoreContainer
 	{
 		private ObjectPool _pool;
@@ -31,7 +34,6 @@ namespace Asteroids.Common.Stores
 		public Container(SceneSettings settings, PresentationController presentation)
 		{
 			_pool = new ObjectPool();
-			//todo magic value
 			_gameData = new GameData(
 				settings.GetPoints, 
 				settings.SpawnSmallAsteroids,

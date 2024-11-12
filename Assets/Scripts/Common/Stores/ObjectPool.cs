@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Asteroids.Common.Stores
 {
+	/// <summary>
+	/// Пул аспектов и связанных с ними актеров (для Common Assembly)
+	/// </summary>
 	internal partial class ObjectPool : IActorPool, IAspectPool
 	{
 		#region Internal structs
@@ -23,11 +26,16 @@ namespace Asteroids.Common.Stores
 			}
 		}
 		#endregion
-
+		//Исходные префабы для аспектов и актеров
 		private readonly Dictionary<ObjectType, PrefabData> _prefabs;
+		//активированные в игре объекты
+		//индекс - ObjectType аспекта
+		//ключ - InstanceID аспекта (равен Actor.InstanceID) 
 		private readonly Dictionary<Aspect, Actor>[] _enables;
+		//выключенные аспекты и объекты
 		private readonly Dictionary<Aspect, Actor>[] _disables;
-
+		//буффер для хранения трансфера сущностей между _enables & _disables
+		//необходимо для корректной работы в рамках foreach
 		private readonly Dictionary<Aspect, Actor> _buffer;
 
 		public void AddPrefab(ObjectType type, Actor actorPrefab, Aspect aspectPrefab, int capacity)
@@ -60,9 +68,6 @@ namespace Asteroids.Common.Stores
 		#region ICommonPool API
 		public Actor GetActor(Aspect aspect)
 		{
-#if UNITY_EDITOR
-			//todo add checks
-#endif
 			return _enables[(int)aspect.Collider.Type][aspect];
 		}
 		#endregion
@@ -89,6 +94,7 @@ namespace Asteroids.Common.Stores
 			where T : Aspect
 			=> GetAspect(type) as T;
 
+		//Возвращает аспект в буффер переед выключением
 		public void ReturnAspect(Aspect aspect)
 		{
 			var actor = _enables[(int)aspect.Type][aspect];
@@ -98,6 +104,7 @@ namespace Asteroids.Common.Stores
 			DebugUtility.AddLog($"<b>[Return Aspect]</b>: {aspect}");
 		}
 
+		//Подтверждает перемещение аспектов в буффере
 		public void ConfirmChanged()
 		{
 			//3 state
@@ -125,6 +132,10 @@ namespace Asteroids.Common.Stores
 			_buffer.Clear();
 		}
 
+		/// <summary>
+		/// Возвращает итератор по всем аспектам
+		/// </summary>
+		/// <param name="mask">Маска итератора <seealso cref="PoolUtility"/></param>
 		public IEnumerable<Aspect> GetEnumerable(int mask)
 			=> new Enumerable(_enables, mask);
 		#endregion

@@ -3,6 +3,9 @@ using Asteroids.Core;
 
 namespace Asteroids.Common.Systems
 {
+	/// <summary>
+	/// Визуализация лазерного луча игрока
+	/// </summary>
 	internal class PresentationPlayerLaserSystem : BaseSystem<ICommonContainer>
 	{
 		public PresentationPlayerLaserSystem(ICommonContainer container) : base(container) {}

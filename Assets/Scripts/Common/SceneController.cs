@@ -5,6 +5,9 @@ using Asteroids.Common.Presets;
 using UnityEngine;
 namespace Asteroids.Common
 {
+	/// <summary>
+	/// Entrance point
+	/// </summary>
     public class SceneController : MonoBehaviour
     {
 		private World _world;

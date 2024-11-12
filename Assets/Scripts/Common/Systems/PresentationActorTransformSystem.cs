@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Asteroids.Common.Systems
 {
+	/// <summary>
+	/// Синхронизация Unity-презентации объектов с математическими моделями
+	/// (Aspect -> Actor)
+	/// </summary>
 	internal class PresentationActorTransformSystem : BaseSystem<ICommonContainer>
 	{
 		public PresentationActorTransformSystem(ICommonContainer container) : base(container)	{}
