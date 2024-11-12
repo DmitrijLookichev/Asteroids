@@ -4,6 +4,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Обработка выстрела и коллизий лазера
+	/// </summary>
 	public class PlayerLaserFireSystem : BaseSystem<ICoreContainer>
 	{
 		public PlayerLaserFireSystem(ICoreContainer container) : base(container){}

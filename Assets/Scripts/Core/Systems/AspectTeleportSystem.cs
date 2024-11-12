@@ -1,5 +1,8 @@
 ﻿namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Перемещение аспектов при выходе за экран
+	/// </summary>
 	public class AspectTeleportSystem : BaseSystem<ICoreContainer>
 	{
 		public AspectTeleportSystem(ICoreContainer container) : base(container){}

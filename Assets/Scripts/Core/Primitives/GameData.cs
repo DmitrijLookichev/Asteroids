@@ -9,13 +9,15 @@ namespace Asteroids.Core
 		private int _score;
 		private readonly int[] _costs;
 
+		//Точки уничтожения BigAsteroids - для спауна мелких
 		public Stack<float3> SmallAsteroids { get; }
 
+		//Интервалы для спауна аспектов
 		public Interval AsteroidSpawnInterval { get; }
 		public Interval AlienSpawnInterval { get; }
 		public IntervalInt SpawnSmallAsteroids { get; }
 
-		
+		//Таймеры следующих спаунов
 		public float AsteroidSpawnTime { get; set; }
 		public float AlienSpawnTime { get; set; }
 

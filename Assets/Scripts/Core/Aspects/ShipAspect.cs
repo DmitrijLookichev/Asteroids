@@ -3,7 +3,6 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Aspects
 {
-	//todo struct in Container??
 	public class ShipAspect : Aspect
 	{
 		private ShipMobility _mobility;

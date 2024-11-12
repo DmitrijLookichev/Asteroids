@@ -3,6 +3,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Система расчета всех разрешенных коллизий аспектов
+	/// </summary>
 	public class AspectCollisionSystem : BaseSystem<ICoreContainer>
 	{
 		private float _time;

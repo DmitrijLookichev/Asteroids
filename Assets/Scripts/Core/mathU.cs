@@ -3,6 +3,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core
 {
+	/// <summary>
+	/// Кастомные математические функции
+	/// </summary>
 	public static class mathU
 	{
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]

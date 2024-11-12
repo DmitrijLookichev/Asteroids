@@ -2,6 +2,9 @@
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Расчет времени жизни астеройдов и снарядов
+	/// </summary>
 	public class ColliderLifetimeSystem : BaseSystem<ICoreContainer>
 	{
 		public ColliderLifetimeSystem(ICoreContainer container) : base(container){}

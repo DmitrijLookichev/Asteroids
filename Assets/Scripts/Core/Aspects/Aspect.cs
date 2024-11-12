@@ -4,6 +4,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Aspects
 {
+	/// <summary>
+	/// Базовое представление для Core-сущности
+	/// </summary>
 	public abstract class Aspect : IEquatable<Aspect>
 	{
 		private CollisionData _collider;

@@ -22,26 +22,56 @@ namespace Asteroids.Core
 		private const int _noShips = _asteroids | _projectiles;
 		private const int _all = _ships | _noShips;
 
+		/// <summary>
+		/// Итерация по всем активным кораблям пришельцев
+		/// </summary>
 		public static IEnumerable<Aspect> Aliens(this IAspectPool pool)
 			=> pool.GetEnumerable(_alien);
+		/// <summary>
+		/// Итерация по всем активным большим астеройдам
+		/// </summary>
 		public static IEnumerable<Aspect> BigAsteroids(this IAspectPool pool)
 			=> pool.GetEnumerable(_bigAsteroid);
+		/// <summary>
+		/// Итерация по всем активным малым астеройдам
+		/// </summary>
 		public static IEnumerable<Aspect> SmallAsteroids(this IAspectPool pool)
 			=> pool.GetEnumerable(_smallAsteroid);
+		/// <summary>
+		/// Итерация по всем активным снарядам игрока
+		/// </summary>
 		public static IEnumerable<Aspect> PlayerProjectiles(this IAspectPool pool)
 			=> pool.GetEnumerable(_projectilePlayer);
+		/// <summary>
+		/// Итерация по всем активным снарядам пришельцев
+		/// </summary>
 		public static IEnumerable<Aspect> AlienProjectiles(this IAspectPool pool)
 			=> pool.GetEnumerable(_projectileAlien);
 
 		//Combine
+		/// <summary>
+		/// Итерация по всем активным кораблям (вкл. игрока)
+		/// </summary>
 		public static IEnumerable<Aspect> Ships(this IAspectPool pool)
 			=> pool.GetEnumerable(_player | _alien);
+		/// <summary>
+		/// Итерация по всем активным большим и малым астеройдам
+		/// </summary>
 		public static IEnumerable<Aspect> Asteroids(this IAspectPool pool)
 			=> pool.GetEnumerable(_bigAsteroid | _smallAsteroid);
+		/// <summary>
+		/// Итерация по всем активным снарядам (вкл. игрока)
+		/// </summary>
 		public static IEnumerable<Aspect> Projectiles(this IAspectPool pool)
 			=> pool.GetEnumerable(_projectilePlayer | _projectileAlien);
+		/// <summary>
+		/// Итерация по всем активным снарядам и астеройдам
+		/// </summary>
 		public static IEnumerable<Aspect> WithoutShips(this IAspectPool pool)
 			=> pool.GetEnumerable(_noShips);
+		/// <summary>
+		/// Итерация по всем активным аспектам в мире
+		/// </summary>
 		public static IEnumerable<Aspect> All(this IAspectPool pool)
 			=> pool.GetEnumerable(_all);
 	}

@@ -2,6 +2,9 @@
 
 namespace Asteroids.Core.Aspects
 {
+	/// <summary>
+	/// Представление для временных объектов
+	/// </summary>
 	public class ColliderAspect : Aspect
 	{
 		public float Speed { get; }

@@ -3,6 +3,9 @@ using System.Diagnostics;
 
 namespace Asteroids.Core
 {
+	/// <summary>
+	/// Утилита для проброски логов из Core сборки
+	/// </summary>
 	public static class DebugUtility
 	{
 		public enum LogType : byte

@@ -3,6 +3,9 @@
 using System.Collections.Generic;
 namespace Asteroids.Core
 {
+	/// <summary>
+	/// Интерфейс для работы с пулом в Core части проекта
+	/// </summary>
 	public interface IAspectPool
 	{
 		Aspect GetAspect(ObjectType type);

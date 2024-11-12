@@ -1,6 +1,9 @@
 ﻿
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Восстановление зарядов лазера игрока
+	/// </summary>
 	public class PlayerLaserRenewalSystem : BaseSystem<ICoreContainer>
 	{
 		public PlayerLaserRenewalSystem(ICoreContainer container) : base(container)	{}

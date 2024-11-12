@@ -3,6 +3,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Система создания новых астеройдов и пришельцев
+	/// </summary>
 	public class AlienAndBigAsteroidSpawnSystem : BaseSystem<ICoreContainer>
 	{
 		private Random _random;

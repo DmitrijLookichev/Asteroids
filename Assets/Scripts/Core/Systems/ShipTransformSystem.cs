@@ -4,6 +4,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Трансформация всех кораблей
+	/// </summary>
 	public class ShipTransformSystem : BaseSystem<ICoreContainer>
 	{
 		public ShipTransformSystem(ICoreContainer container) : base(container) { }

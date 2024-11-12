@@ -4,6 +4,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Расчет силы стремления кораблей на основе инпутов
+	/// </summary>
     public class ShipVelocitySystem : BaseSystem<ICoreContainer>
 	{
 		public ShipVelocitySystem(ICoreContainer container) : base(container)	{}

@@ -2,7 +2,6 @@
 {
 	public readonly struct ShipMobility
 	{
-		//In radians
 		public readonly float RotationSpeed;
 		public readonly float Acceleration;
 		public readonly float Deceleration;

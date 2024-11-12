@@ -4,6 +4,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Перемещение снарядов и астеройдов
+	/// </summary>
 	public class ColliderTransformSystem : BaseSystem<ICoreContainer>
 	{
 		public ColliderTransformSystem(ICoreContainer container) : base(container){}

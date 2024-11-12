@@ -3,6 +3,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Спаун снарядов при выстреле кораблей
+	/// </summary>
 	public class ShipWeaponSystem : BaseSystem<ICoreContainer>
 	{
 		public ShipWeaponSystem(ICoreContainer container) : base(container) { }

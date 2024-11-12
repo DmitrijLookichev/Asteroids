@@ -2,6 +2,9 @@
 
 namespace Asteroids.Core
 {
+	/// <summary>
+	/// Интерфейс для работы с контейнером в Core части проекта
+	/// </summary>
 	public interface ICoreContainer
 	{
 		IAspectPool Aspects { get; }

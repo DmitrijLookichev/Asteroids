@@ -4,6 +4,9 @@ using Unity.Mathematics;
 
 namespace Asteroids.Core.Systems
 {
+	/// <summary>
+	/// Определение направления вращения пришельцев на игрока
+	/// </summary>
 	public class AlienInputSystem : BaseSystem<ICoreContainer>
 	{
 		public AlienInputSystem(ICoreContainer container) : base(container)	{}
