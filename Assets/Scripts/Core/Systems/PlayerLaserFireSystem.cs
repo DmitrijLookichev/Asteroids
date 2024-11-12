@@ -18,9 +18,7 @@ namespace Asteroids.Core.Systems
 
 			ref var transform = ref Container.Player.Transform;
 			//Max length in screen
-			var distance = math.length(
-				new float2(Container.Screen.xMin, Container.Screen.yMin) -
-				new float2(Container.Screen.xMax, Container.Screen.yMax));
+			var distance = math.length(Container.Screen.Min - Container.Screen.Max);
 
 			var offset = math.rotate(transform.rot, player.Weapon.WeaponOffset);
 			var startPoint = transform.pos + offset;

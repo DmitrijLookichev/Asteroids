@@ -45,19 +45,23 @@ namespace Asteroids.Core.Systems
 			{
 				//Left screen border
 				case 0:
-					(a.x, a.y, b.x, b.y) = (rect.xMin, rect.yMin, rect.xMin, rect.yMax);
+					(a.x, a.y) = (rect.Min.x, rect.Min.y);
+					(b.x, b.y) = (rect.Min.x, rect.Max.y);
 					break;
 				//Top screen border
 				case 1:
-					(a.x, a.y, b.x, b.y) = (rect.xMin, rect.yMax, rect.xMax, rect.yMax);
+					(a.x, a.y) = (rect.Min.x, rect.Max.y);
+					(b.x, b.y) = (rect.Max.x, rect.Max.y);
 					break;
 				//Right screen border
 				case 2:
-					(a.x, a.y, b.x, b.y) = (rect.xMax, rect.yMax, rect.xMax, rect.yMin);
+					(a.x, a.y) = (rect.Max.x, rect.Max.y);
+					(b.x, b.y) = (rect.Max.x, rect.Min.y);
 					break;
 				//Down screen border
 				case 3:
-					(a.x, a.y, b.x, b.y) = (rect.xMax, rect.yMin, rect.xMin, rect.yMin);
+					(a.x, a.y) = (rect.Max.x, rect.Min.y);
+					(b.x, b.y) = (rect.Min.x, rect.Min.y);
 					break;
 			}
 

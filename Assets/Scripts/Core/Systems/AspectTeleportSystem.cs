@@ -7,16 +7,16 @@
 		public override void OnUpdate(in float time, in float delta)
 		{
 			ref var rect = ref Container.Screen;
-			var xSwift = rect.xMax - rect.xMin;
-			var ySwift = rect.yMax - rect.yMin;
+			var xSwift = rect.Max.x - rect.Min.x;
+			var ySwift = rect.Max.y - rect.Min.y;
 			foreach(var aspect in Container.Aspects.All())
 			{
 				ref var pos = ref aspect.Transform.pos;
-				if (pos.x < rect.xMin) pos.x += xSwift;
-				else if (pos.x > rect.xMax) pos.x -= xSwift;
+				if (pos.x < rect.Min.x) pos.x += xSwift;
+				else if (pos.x > rect.Max.x) pos.x -= xSwift;
 
-				if (pos.y < rect.yMin) pos.y += ySwift;
-				else if (pos.y > rect.yMax) pos.y -= ySwift;
+				if (pos.y < rect.Min.y) pos.y += ySwift;
+				else if (pos.y > rect.Max.y) pos.y -= ySwift;
 			}
 		}
 	}
